@@ -1,0 +1,121 @@
+﻿@page "/"
+@using Test.API
+@using BlazorWasmTest.API.Exception
+@inject IItemsClient ItemsClient
+@inject IIGDBClient IgdbClient
+@inject IFirebaseClient FirebaseClient
+@inject IJSRuntime JsRuntime
+
+<PageTitle>Index</PageTitle>
+
+<table>
+    <tbody>
+    <tr>
+        <th class="text-gray-50">Email</th>
+        <td>
+            <input class="form-control" @bind="_loginRequest.Email"/>
+        </td>
+    </tr>
+    <tr>
+        <th>Password</th>
+        <td>
+            <input class="form-control" @bind="_loginRequest.Password"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<table>
+    <tbody>
+    <tr>
+        <th>Email</th>
+        <td>
+            <input class="form-control" @bind="_loginRequest.Email"/>
+        </td>
+    </tr>
+    <tr>
+        <th>Password</th>
+        <td>
+            <input class="form-control" @bind="_loginRequest.Password"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<button class="btn" @onclick="async () => await HandleLoginRequest()">Login</button>
+
+<h1 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Hello, world!</h1>
+
+<ul>
+    @foreach (var item in _items)
+    {
+        <li>@item.Name</li>
+        <li>@item.Price</li>
+    }
+</ul>
+
+<ul>
+    @foreach (var game in _games)
+    {
+        <li>@game.Name + @game.Id</li>
+    }
+</ul>
+
+<ul>
+    @foreach (var user in _users)
+    {
+        <li>@user.Name + @user.Email</li>
+    }
+</ul>
+
+<button @onclick="async () => await RefreshItems()">Refresh Items</button>
+
+@code {
+
+    private readonly FirebaseUserDTO _loginRequest = new();
+
+    private List<ItemDTO> _items = new();
+    private List<IGDBDTO> _games = new();
+    private List<FirebaseUserDTO> _users = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var listOfAllItemsAsync = await ItemsClient.GetListOfAllItemsAsync();
+        _items = listOfAllItemsAsync.ToList();
+        var listOfAllGamesAsync = await IgdbClient.GetListOfGamesAsync();
+        _games = listOfAllGamesAsync.ToList();
+        var listOfAllUsersAsync = await FirebaseClient.GetListOfUsersAsync();
+        _users = listOfAllUsersAsync.ToList();
+    }
+
+    private async Task HandleLoginRequest()
+    {
+        try
+        {
+            await FirebaseClient.LoginAsync(_loginRequest);
+            await DisplaySuccess("Logged in successfully");
+        }
+        catch (ApiException ex)
+        {
+            await DisplayError(ex.ToString());
+        }
+    }
+
+    private async Task RefreshItems()
+    {
+        var listOfAllItemsAsync = await ItemsClient.GetListOfAllItemsAsync();
+        _items = listOfAllItemsAsync.ToList();
+        StateHasChanged();
+    }
+
+    private async Task DisplaySuccess(string message)
+    {
+        await JsRuntime.InvokeVoidAsync("DisplaySuccessMessage", message);
+    }
+
+    private async Task DisplayError(string message)
+    {
+        await JsRuntime.InvokeVoidAsync("DisplayErrorMessage", message);
+    }
+
+}

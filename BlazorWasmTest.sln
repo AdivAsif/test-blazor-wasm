@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWasmTest", "BlazorWasmTest.csproj", "{89A6250C-49AA-4D32-BA1A-08E1B03C9A28}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		API|Any CPU = API|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89A6250C-49AA-4D32-BA1A-08E1B03C9A28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89A6250C-49AA-4D32-BA1A-08E1B03C9A28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89A6250C-49AA-4D32-BA1A-08E1B03C9A28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89A6250C-49AA-4D32-BA1A-08E1B03C9A28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89A6250C-49AA-4D32-BA1A-08E1B03C9A28}.API|Any CPU.ActiveCfg = API|Any CPU
+		{89A6250C-49AA-4D32-BA1A-08E1B03C9A28}.API|Any CPU.Build.0 = API|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E514CB80-DC0A-4304-8532-9345CDFB24C9}
+	EndGlobalSection
+EndGlobal
